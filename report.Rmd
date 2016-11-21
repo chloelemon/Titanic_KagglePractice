@@ -1,0 +1,89 @@
+---
+title: "Titantic - Exploratory Analysis"
+author: "Chloe"
+date: "10/13/2016"
+output: 
+  html_document:
+    toc: true
+---
+
+<style>
+  body {
+    background: #F0F0F0;
+  }
+</style>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r prep, message=FALSE, warning=FALSE, include=FALSE}
+
+#clear environment if needed
+rm(list = ls())
+
+#set working directory
+setwd('~//Documents/Dev_dataScienceProjects/1.Titanic_machineLearning_Kaggle')
+
+#laod data
+train <- read.csv("./Data/train.csv",stringsAsFactors = F)
+test <- read.csv("./Data/test.csv",stringsAsFactors = F)
+
+#combine dataset for exploratory analysis
+#take out Survived from train set
+master <- rbind(train[,-2],test)
+
+#install/reuqire libraries
+pacman::p_load("ggplot2","data.table","dplyr")
+
+```
+
+## Overview
+
+
+### Hypotheses
+
+
+
+## Data
+### Variable Descriptions
+
+|Variable |Descriptions                                                        |
+|--------:|-------------------------------------------------------------------:|
+|survival |Survival (0 = No; 1 = Yes)                                          |
+|pclass   |Passenger Class (1 = 1st; 2 = 2nd; 3 = 3rd)                         |
+|name     |Name                                                                |
+|sex      |Sex                                                                 |
+|age      |Age                                                                 |
+|sibsp    |Number of Siblings/Spouses Aboard                                   |
+|parch    |Number of Parents/Children Aboard                                   |
+|ticket   |Ticket Number                                                       |
+|fare     |Passenger Fare                                                      |
+|cabin    |Cabin                                                               |
+|embarked |Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton)|
+
+```{r datatype, message=FALSE, warning=FALSE, include=FALSE}
+#transform data type into correct format
+#since this dataset has few variables
+col_char=c("PassengerId","Name","Ticket") #select columns that need to be transformed to factor
+                master[col_char] <- lapply(master[col_char], character)
+                
+                
+
+col_fact=c("Pclass","Cabin","Embarked") #select columns that need to be transformed to factor
+                master[col_fact] <- lapply(master[col_fact], factor)
+
+
+
+```
+
+### Basic Statistics
+- Dataset includes total of __`r dim(master)[1]`__ records with __`r dim(master)[2]`__ independent variables, and __survival__ as dependent variable.
+- Examine missing values (graphs)
+    + Treatment of missing values
+    + Age: imputation
+    + Fare:
+
+
